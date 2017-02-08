@@ -1,0 +1,23 @@
+platform:
+  - Win32
+  - x64
+
+configuration:
+  - Debug
+  - Release
+
+init:
+  - cmd: cmake --version
+  - cmd: msbuild /version
+
+build_script:
+  - cmd: cd C:\projects\unitTestEngine
+  - cmd: mkdir build
+  - cmd: cd build
+  - cmd: if "%platform%"=="Win32" set CMAKE_GENERATOR=Visual Studio 14 2015
+  - cmd: if "%platform%"=="x64" set CMAKE_GENERATOR=Visual Studio 14 2015 Win64
+  - cmd: cmake -G"%CMAKE_GENERATOR%" ..
+  - cmd: msbuild unitTestEngine.sln /p:Configuration=%configuration% /p:Platform=%platform%
+  - cmd: if "%platform%"=="Win32" set VSTEST_PLATFORM=x86
+  - cmd: if "%platform%"=="x64" set VSTEST_PLATFORM=x64
+  - cmd: vstest.console /logger:Appveyor tests\%configuration%\Tests.dll /Platform:%VSTEST_PLATFORM%

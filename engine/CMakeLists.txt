@@ -1,4 +1,4 @@
-set (UNITTESTENGINE_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/engine)
+set (UNITTESTENGINE_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 find_package (Threads)
 
 if (MSVC)
@@ -16,14 +16,14 @@ else (MSVC)
     set(GOOGLETEST_ROOT engine/googletest/googletest CACHE STRING "Google Test source root")
 
     include_directories(
-            ${PROJECT_SOURCE_DIR}/${GOOGLETEST_ROOT}
-            ${PROJECT_SOURCE_DIR}/${GOOGLETEST_ROOT}/include
+            ${CMAKE_CURRENT_SOURCE_DIR}/../${GOOGLETEST_ROOT}
+            ${CMAKE_CURRENT_SOURCE_DIR}/../${GOOGLETEST_ROOT}/include
     )
 
     set(
             GOOGLETEST_SOURCES
-            ${PROJECT_SOURCE_DIR}/${GOOGLETEST_ROOT}/src/gtest-all.cc
-            ${PROJECT_SOURCE_DIR}/${GOOGLETEST_ROOT}/src/gtest_main.cc
+            ${CMAKE_CURRENT_SOURCE_DIR}/../${GOOGLETEST_ROOT}/src/gtest-all.cc
+            ${CMAKE_CURRENT_SOURCE_DIR}/../${GOOGLETEST_ROOT}/src/gtest_main.cc
     )
 
     foreach (_source ${GOOGLETEST_SOURCES})
@@ -32,5 +32,5 @@ else (MSVC)
 
     add_library(googletest ${GOOGLETEST_SOURCES})
     set(UNITTESTENGINE_LIBRARYS googletest ${CMAKE_THREAD_LIBS_INIT} PARENT_SCOPE)
-    set(UNITTESTENGINE_INCLUDE_DIR ${UNITTESTENGINE_INCLUDE_DIR} ${PROJECT_SOURCE_DIR}/${GOOGLETEST_ROOT}/include ${PROJECT_SOURCE_DIR}/${GOOGLETEST_ROOT} PARENT_SCOPE)
+    set(UNITTESTENGINE_INCLUDE_DIR ${UNITTESTENGINE_INCLUDE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/../${GOOGLETEST_ROOT}/include ${CMAKE_CURRENT_SOURCE_DIR}/../${GOOGLETEST_ROOT} PARENT_SCOPE)
 endif (MSVC)

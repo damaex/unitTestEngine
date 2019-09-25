@@ -1,17 +1,44 @@
 language: cpp
-dist: trusty
 
-os:
-  - linux
-  - osx
+matrix:
+  include:
+    - os: linux
+      dist: trusty
+      compiler: gcc
+    - os: linux
+      dist: trusty
+      compiler: clang
+    - os: osx
+      osx_image: xcode11
+    - os: osx
+      osx_image: xcode10.3
+    - os: osx
+      osx_image: xcode11
+      env:
+        - USE_XCODE="true"
+    - os: osx
+      osx_image: xcode10.3
+      env:
+        - USE_XCODE="true"
 
-compiler:
-  - gcc
-  - clang
+before_install:
+  - if [ "${USE_XCODE}" = "true" ]; then brew update         ; fi
+  - if [ "${USE_XCODE}" = "true" ]; then gem install xcpretty; fi
 
 script:
   - git submodule init && git submodule update
   - mkdir build
   - cd build
-  - cmake .. && make
-  - ./tests/Tests
+  - |
+    if [[ "${USE_XCODE}" == "true" ]]; then
+      cmake -G Xcode ..
+    else
+      cmake ..
+    fi
+  - cmake --build .
+  - |
+    if [[ "${USE_XCODE}" == "true" ]]; then
+      xcodebuild -project unitTestEngine.xcodeproj -scheme Tests test | xcpretty
+    else
+      ./tests/Tests
+    fi

@@ -76,6 +76,8 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 #elif __APPLE__
 
+//Test Includes
+#import <XCTest/XCTest.h>
 
 #define UNITTEST_NAMESPACE(name)
 #define UNITTEST_NAMESPACE_END
@@ -101,10 +103,6 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 #define UNITTEST_ASSERT_ISNULL(a)           UNITTEST_ASSERT_ISTRUE(a == NULL)
 
 #define UNITTEST_ASSERT_FAIL()              XCTFail()
-
-//Test Includes
-#import <XCTest/XCTest.h>
-
 
 #endif
 

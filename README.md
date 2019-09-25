@@ -6,4 +6,4 @@
 - [x] cmake
 - [x] on MSVC it uses Visual Studio CppUnitTestFramework
 - [x] everywhere else it uses googletest
-- [ ] XCode XCTestCase
+- [x] XCode XCTestCase

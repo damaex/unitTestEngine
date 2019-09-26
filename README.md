@@ -7,3 +7,5 @@
 - [x] on MSVC it uses Visual Studio CppUnitTestFramework
 - [x] everywhere else it uses googletest
 - [x] XCode XCTestCase
+- [ ] rebuild as cmake module
+    - [ ] better description and examples
